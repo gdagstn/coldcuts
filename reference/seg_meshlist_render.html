@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot numeric data on a segmentation — seg_feature_plot • coldcuts</title>
+<title>Render meshes from a segmentation — seg_meshlist_render • coldcuts</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Plot numeric data on a segmentation — seg_feature_plot" />
-<meta property="og:description" content="Creates a `ggplot` plot where numeric data, mapped to structures, fill the segmentation shapes in a colour scale" />
+<meta property="og:title" content="Render meshes from a segmentation — seg_meshlist_render" />
+<meta property="og:description" content="Renders a list of mesh3d objects using ontology-defined colors" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:creator" content="@gdagstn" />
 <meta name="twitter:site" content="@gdagstn" />
@@ -129,27 +129,20 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot numeric data on a segmentation</h1>
-    <small class="dont-index">Source: <a href='https://github.com/langleylab/coldcuts/blob/master/R/coldcuts.R'><code>R/coldcuts.R</code></a></small>
-    <div class="hidden name"><code>seg_feature_plot.Rd</code></div>
+    <h1>Render meshes from a segmentation</h1>
+    <small class="dont-index">Source: <a href='https://github.com/langleylab/coldcuts/blob/master/R/coldcuts3D.R'><code>R/coldcuts3D.R</code></a></small>
+    <div class="hidden name"><code>seg_meshlist_render.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Creates a `ggplot` plot where numeric data, mapped to structures, fill the segmentation shapes in a colour scale</p>
+    <p>Renders a list of mesh3d objects using ontology-defined colors</p>
     </div>
 
-    <pre class="usage"><span class='fu'>seg_feature_plot</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>seg_meshlist_render</span><span class='op'>(</span>
   <span class='va'>segmentation</span>,
-  <span class='va'>feature</span>,
-  <span class='va'>assay</span>,
-  projection <span class='op'>=</span> <span class='cn'>NULL</span>,
-  plane <span class='op'>=</span> <span class='st'>"sagittal"</span>,
-  smooth <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  smoothness <span class='op'>=</span> <span class='fl'>3</span>,
-  minsize <span class='op'>=</span> <span class='fl'>10</span>,
-  color_pal <span class='op'>=</span> <span class='cn'>NULL</span>,
-  show_labels <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  remove_axes <span class='op'>=</span> <span class='cn'>TRUE</span>
+  subset_str <span class='op'>=</span> <span class='cn'>NULL</span>,
+  iterations <span class='op'>=</span> <span class='fl'>4</span>,
+  style <span class='op'>=</span> <span class='st'>"matte"</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -157,53 +150,25 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>segmentation</th>
-      <td><p>a <code>segmentation</code> class object.</p></td>
+      <td><p>a `segmentation` class object</p></td>
     </tr>
     <tr>
-      <th>feature</th>
-      <td><p>character, feature to be plotted from the <code>assay</code> slot.</p></td>
+      <th>subset_str</th>
+      <td><p>a character vector indicating the structure(s) to be rendered, by acronym. Default is <code>NULL</code>, meaning the whole segmentation will be rendered as a single mesh.</p></td>
     </tr>
     <tr>
-      <th>assay</th>
-      <td><p>character, the name of the <code>assay</code> slot in the <code>segmentation</code>.</p></td>
+      <th>iterations</th>
+      <td><p>numeric, iterations for HC smoothing of the meshes</p></td>
     </tr>
     <tr>
-      <th>projection</th>
-      <td><p>Character, name of the maximum projection slot to be used? Default is <code>NULL</code>, which uses the same name as selected in <code>assay</code>.</p></td>
-    </tr>
-    <tr>
-      <th>plane</th>
-      <td><p>character, the plane for the maximum projection. Default is "sagittal".</p></td>
-    </tr>
-    <tr>
-      <th>smooth</th>
-      <td><p>logical, should shapes be smoothed? Default is <code>TRUE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>smoothness</th>
-      <td><p>numeric, the smoothing to be used. Default is 3.</p></td>
-    </tr>
-    <tr>
-      <th>minsize</th>
-      <td><p>numeric, minimum number of vertices to draw a polygon. Default is 10.</p></td>
-    </tr>
-    <tr>
-      <th>color_pal</th>
-      <td><p>character, the color palette to be used. The default is the `Sunset` palette from <code>colorspace</code></p></td>
-    </tr>
-    <tr>
-      <th>show_labels</th>
-      <td><p>logical, should segmentation labels be shown? Default is <code>TRUE</code></p></td>
-    </tr>
-    <tr>
-      <th>remove_axes</th>
-      <td><p>logical, should axes be shown? Default is <code>FALSE</code></p></td>
+      <th>style</th>
+      <td><p>character, one of "matte" or "shiny" as a rendering style</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a `ggplot` plot in which structures are coloured according to a numeric value</p>
+    <p>a plot of all meshes selected from the segmentation `meshes` slot, smoothed and rendered in a <code>rgl</code> window.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
